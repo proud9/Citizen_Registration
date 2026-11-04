@@ -1,0 +1,59 @@
+[
+  {
+    "recordType": "BIRTH",
+    "placeOfBirth": "Chililabombwe",
+    "parentName": "Fines",
+    "id": "BR-0001",
+    "fullName": "Proud",
+    "dateOfBirth": "2003-09-09",
+    "province": "Copperbelt",
+    "createdAt": "2026-11-04T11:11:16.698755800Z"
+  },
+  {
+    "recordType": "NRC_APPLICATION",
+    "applicationStatus": "COMPLETED",
+    "id": "NRC-APP-0001",
+    "fullName": "Proud",
+    "dateOfBirth": "2003-09-09",
+    "province": "Copperbelt",
+    "createdAt": "2026-11-04T11:12:08.193540600Z"
+  },
+  {
+    "recordType": "BIRTH",
+    "placeOfBirth": "Demo Town",
+    "parentName": "Demo Parent A",
+    "id": "BR-0002",
+    "fullName": "Demo Person A",
+    "dateOfBirth": "2000-01-15",
+    "province": "Central",
+    "createdAt": "2026-11-04T11:12:19.165680100Z"
+  },
+  {
+    "recordType": "NRC_APPLICATION",
+    "applicationStatus": "PENDING",
+    "id": "NRC-APP-0002",
+    "fullName": "Demo Person B",
+    "dateOfBirth": "1999-05-20",
+    "province": "Copperbelt",
+    "createdAt": "2026-11-04T11:12:19.189860500Z"
+  },
+  {
+    "recordType": "BIRTH",
+    "placeOfBirth": "Chingola",
+    "parentName": "John",
+    "id": "BR-0003",
+    "fullName": "John",
+    "dateOfBirth": "2020-09-20",
+    "province": "Copperbelt",
+    "createdAt": "2026-11-04T11:28:25.699350100Z"
+  },
+  {
+    "recordType": "NRC_APPLICATION",
+    "applicationStatus": "PROCESSING",
+    "id": "NRC-APP-0003",
+    "fullName": "John",
+    "dateOfBirth": "2020-09-20",
+    "province": "Copperbelt",
+    "createdAt": "2026-11-04T11:29:03.853545600Z"
+  }
+]
