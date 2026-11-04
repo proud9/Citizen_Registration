@@ -1,4 +1,4 @@
-# Synthetic Citizen Record Manager
+# Citizen_Registration
 
 ## Team members
 
