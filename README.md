@@ -21,6 +21,7 @@ Paper-based citizen registration records can be slow to search and easy to lose.
 - Assign generated reference IDs and timestamps to new records.
 - Validate required fields, dates of birth, and application statuses.
 - Store records in `data/records.json` so they survive a restart.
+- Interactive front end with live creation, deletion, demo seeding, and inline status updates (via HTTP PUT).
 
 NRC applications currently store applicant details and an application status; they are not linked to birth records.
 
@@ -54,29 +55,30 @@ mvn test
 | PUT | `/api/nrc-applications/{id}` | Replace/update an NRC application |
 | DELETE | `/api/nrc-applications/{id}` | Delete an NRC application |
 
-Application statuses are `PENDING`, `PROCESSING`, `COMPLETED`, and `REJECTED`. Updates use the full record body, not a status-only endpoint. The web page supports creating, listing, and deleting records.
+Application statuses are `PENDING`, `PROCESSING`, `COMPLETED`, and `REJECTED`. The web page supports creating, listing, deleting, and updating records.
 
 ## Classes and OOP concepts
 
 | Class | Responsibility |
 |---|---|
 | `Main` | Creates the JSON repository, service, controller, and Javalin server |
-| `model.CitizenRecord` | Abstract base class for common citizen record fields and record type |
+| `model.CitizenRecord` | Abstract base class for common citizen record fields, polymorphic validation, and summary |
 | `model.BirthRecord` | Birth record subtype, including place of birth and parent name |
 | `model.NRCApplication` | NRC application subtype, including application status |
 | `repository.RecordRepository` | Interface for listing, finding, saving, and deleting records |
 | `repository.JsonRecordRepository` | Persists records as JSON and restores their concrete record types |
-| `service.RecordService` | Validates and manages records; throws `RecordNotFoundException` when a requested record is missing |
-| `exception.RecordNotFoundException` | Custom exception for missing records |
-| `web.RecordController` | Registers REST endpoints and maps exceptions to HTTP responses |
+| `service.RecordService` | Validates and manages records using polymorphic validation and custom exceptions |
+| `exception.RecordNotFoundException` | Custom exception for missing records (HTTP 404) |
+| `exception.InvalidRecordException` | Custom exception for invalid record inputs or validation failures (HTTP 400) |
+| `web.RecordController` | Registers REST endpoints and maps custom exceptions to HTTP responses |
 | `src/main/resources/public/` | Static HTML, JavaScript, and CSS for the web front end |
 
-- **Encapsulation:** model fields are private and accessed through getters and setters. The service validates record data before saving it.
+- **Encapsulation:** Model fields are private and accessed through getters and setters. Subclasses encapsulate their own internal validation logic.
 - **Inheritance:** `BirthRecord` and `NRCApplication` extend `CitizenRecord`.
 - **Interface:** `JsonRecordRepository` implements `RecordRepository`.
-- **Polymorphism:** both record subtypes override `getRecordType()`, and the repository serializes records through the common `CitizenRecord` type.
-- **Custom exception:** `RecordService` throws `RecordNotFoundException`, which `RecordController` maps to HTTP 404.
-- **Collections:** the repository uses lists to work with sets of records.
+- **Polymorphism:** Subtypes override `getRecordType()`, `validateDetails()`, and `getDetailsSummary()`. The service validates records polymorphically without needing `instanceof` checks, and the repository saves and serializes records through the common `CitizenRecord` interface.
+- **Custom exceptions:** `RecordService` throws `RecordNotFoundException` (mapped to HTTP 404) and `InvalidRecordException` (mapped to HTTP 400).
+- **Collections:** The repository and service use `List<CitizenRecord>` and streams to manipulate and query sets of records.
 
 ## Demo data
 
